@@ -38,6 +38,7 @@
 OCF_RESKEY_binary_default="/usr/bin/keystone-all"
 OCF_RESKEY_config_default="/etc/keystone/keystone.conf"
 OCF_RESKEY_pid_default="$HA_RSCTMP/$OCF_RESOURCE_INSTANCE.pid"
+OCF_RESKEY_user_default="keystone"
 OCF_RESKEY_client_binary_default="/usr/bin/keystone"
 
 : ${OCF_RESKEY_binary=${OCF_RESKEY_binary_default}}
