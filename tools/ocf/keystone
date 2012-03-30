@@ -145,9 +145,9 @@ User running OpenStack Identity (Keystone)
 
 <parameter name="pid" unique="0" required="0">
 <longdesc lang="en">
-The pid to use for this Keystone instance (keystone-all)
+The pid file to use for this Keystone instance (keystone-all)
 </longdesc>
-<shortdesc lang="en">OpenStack Identity (Keystone) pid</shortdesc>
+<shortdesc lang="en">OpenStack Identity (Keystone) pid file</shortdesc>
 <content type="string" default="${OCF_RESKEY_pid_default}" />
 </parameter>
 
