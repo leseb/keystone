@@ -182,10 +182,6 @@ keystone_validate() {
 
     check_binary $OCF_RESKEY_binary
 
-    if [ -n "$OCF_RESKEY_client_binary" ]; then
-        check_binary $OCF_RESKEY_client_binary
-    fi
-
     # A config file on shared storage that is not available
     # during probes is OK.
     if [ ! -f $OCF_RESKEY_config ]; then
@@ -243,16 +239,19 @@ keystone_monitor() {
     if [ -n "$OCF_RESKEY_client_binary" ] && [ -n "$OCF_RESKEY_os_username" ] \
     && [ -n "$OCF_RESKEY_os_password" ] && [ -n "$OCF_RESKEY_os_tenant_name" ] \
     && [ -n "$OCF_RESKEY_os_auth_url" ]; then
-    ocf_run $OCF_RESKEY_client_binary \
-        --username "$OCF_RESKEY_os_username" \
-        --password "$OCF_RESKEY_os_password" \
-        --tenant_name "$OCF_RESKEY_os_tenant_name" \
-        --auth_url "$OCF_RESKEY_os_auth_url" \
-        user-list > /dev/null 2>&1
-        rc=$?
-        if [ $rc -ne 0 ]; then
-            ocf_log err "Failed to connect to the OpenStack Identity (Keystone): $rc"
-            return $OCF_NOT_RUNNING
+        if ! check_binary $OCF_RESKEY_client_binary; then ocf_log warn "$OCF_RESKEY_client_binary \
+          missing, can not monitor!" else
+            ocf_run $OCF_RESKEY_client_binary \
+              --username "$OCF_RESKEY_os_username" \
+              --password "$OCF_RESKEY_os_password" \
+              --tenant_name "$OCF_RESKEY_os_tenant_name" \
+              --auth_url "$OCF_RESKEY_os_auth_url" \
+              user-list > /dev/null 2>&1
+            rc=$?
+            if [ $rc -ne 0 ]; then
+                ocf_log err "Failed to connect to the OpenStack Identity (Keystone): $rc"
+                return $OCF_NOT_RUNNING
+            fi
         fi
     fi
 
