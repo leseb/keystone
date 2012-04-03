@@ -241,7 +241,9 @@ keystone_monitor() {
     && [ -n "$OCF_RESKEY_os_auth_url" ]; then
         if ! check_binary $OCF_RESKEY_client_binary; then ocf_log warn "$OCF_RESKEY_client_binary \
           missing, can not monitor!" else
-            ocf_run $OCF_RESKEY_client_binary \
+            # don't run this through ocf_run. We aren't the least bit interested
+            # in its actual output, we just want to know whether it works or not.
+            $OCF_RESKEY_client_binary \
               --username "$OCF_RESKEY_os_username" \
               --password "$OCF_RESKEY_os_password" \
               --tenant_name "$OCF_RESKEY_os_tenant_name" \
