@@ -277,6 +277,7 @@ keystone_start() {
     # Spin waiting for the server to come up.
     # Let the CRM/LRM time us out if required
     while true; do
+    sleep 1
     keystone_monitor
     rc=$?
     [ $rc -eq $OCF_SUCCESS ] && break
@@ -284,7 +285,6 @@ keystone_start() {
         ocf_log err "OpenStack Identity (Keystone) start failed"
         exit $OCF_ERR_GENERIC
     fi
-    sleep 1
     done
 
     ocf_log info "OpenStack Identity (Keystone) started"
