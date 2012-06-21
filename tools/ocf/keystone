@@ -239,8 +239,9 @@ keystone_monitor() {
     if [ -n "$OCF_RESKEY_client_binary" ] && [ -n "$OCF_RESKEY_os_username" ] \
     && [ -n "$OCF_RESKEY_os_password" ] && [ -n "$OCF_RESKEY_os_tenant_name" ] \
     && [ -n "$OCF_RESKEY_os_auth_url" ]; then
-        if ! check_binary $OCF_RESKEY_client_binary; then ocf_log warn "$OCF_RESKEY_client_binary \
-          missing, can not monitor!" else
+        if ! check_binary $OCF_RESKEY_client_binary; then 
+            ocf_log warn "$OCF_RESKEY_client_binary missing, can not monitor!"
+        else
             ocf_run -q $OCF_RESKEY_client_binary \
               --username "$OCF_RESKEY_os_username" \
               --password "$OCF_RESKEY_os_password" \
